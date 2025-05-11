@@ -2,6 +2,7 @@ package com.commets.micro.service.commets_micro_service.Infraestructura.adaptado
 
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.commets.micro.service.commets_micro_service.Aplicacion.puertos.in.ConsultarComentarioDocenteUseCase;
@@ -11,6 +12,9 @@ import com.commets.micro.service.commets_micro_service.Aplicacion.puertos.in.Eli
 import com.commets.micro.service.commets_micro_service.Aplicacion.puertos.in.PromedioCalificacionUseCase;
 import com.commets.micro.service.commets_micro_service.Aplicacion.puertos.in.RegistrarComentarioUseCase;
 import com.commets.micro.service.commets_micro_service.Aplicacion.puertos.in.ToogleLikeUseCase;
+import com.commets.micro.service.commets_micro_service.Aplicacion.puertos.in.dto.CommentDto;
+
+import jakarta.validation.Valid;
     
 
 
@@ -79,12 +83,19 @@ public class CommentController {
     /* ----------   MÉTODOS POST (sin cambios) ---------- */
 
     @PostMapping("/registrar_comentario")
-    public Map<String,Object> registrar(@RequestParam Long id_usuario,
-                                        @RequestParam Long id_docente,
-                                        @RequestParam String comentario,
-                                        @RequestParam int calificacion) {
-        Long id = regUC.ejecutarR(id_usuario,id_docente,comentario,calificacion);
-        return Map.of("response","success","id_comentario",id);
+    public ResponseEntity<Map<String,Object>> registrar(
+        @Valid @RequestBody CommentDto req
+    ) {
+        Long id = regUC.ejecutarR(
+            req.getIdUsuario(),
+            req.getIdDocente(),
+            req.getComentario(),
+            req.getCalificacion()
+        );
+        // devolvemos un Map sin necesidad de DTO extra
+        return ResponseEntity.ok(
+            Map.of("response", "success", "id_comentario", id)
+        );
     }
 
     @PostMapping("/eliminar_comentario")
