@@ -17,7 +17,7 @@ ConsultarComentarioDocenteUseCase, ConsultarTodosComentariosUseCase, PromedioCal
 
     @Override
     public Long ejecutarR(Long idUsuario, Long idDocente, String comentario, int calificacion) {
-        if(calificacion<1||calificacion>5) throw new IllegalArgumentException("El la calificación debe ser entre 1-5");
+        if(calificacion<1||calificacion>10) throw new IllegalArgumentException("El la calificación debe ser entre 1-5");
         return repo.save(new Comment(idUsuario,idDocente,comentario,calificacion)).getId(); 
     }
 
