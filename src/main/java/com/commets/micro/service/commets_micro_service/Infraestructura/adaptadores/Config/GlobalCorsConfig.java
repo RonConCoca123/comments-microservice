@@ -8,11 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class GlobalCorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")               // aplica a todos los endpoints
-                .allowedOrigins("*")             // o tu frontend: e.g. "https://misitio.com"
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*")   // ← usa patterns en lugar de allowedOrigins
                 .allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true)          // si quieres enviar cookies / auth
+                .allowCredentials(true)
                 .maxAge(3600);
     }
 }
