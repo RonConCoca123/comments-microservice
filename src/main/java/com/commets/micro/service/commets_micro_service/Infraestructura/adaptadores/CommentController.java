@@ -20,7 +20,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/comments")
-@CrossOrigin(origins = "*") 
 public class CommentController {
 
     private final RegistrarComentarioUseCase regUC;
